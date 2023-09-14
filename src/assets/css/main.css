@@ -1,0 +1,160 @@
+@import './base.css';
+
+
+/*
+======================
+    Header Css 
+======================
+
+*/
+
+.top_header{
+    background-color: #003D29;
+    font-size: 12px;
+    padding: 8px 0;
+}
+
+header select{
+    background-color: #003D29 !important;
+    color: #fff;
+    border: none;
+    outline: none;
+    margin: 0 10px;
+}
+
+.nav-item a{
+    color: #003D29 !important;
+    font-size: 18px;
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-item a::after{
+    position: absolute;
+    content: '';
+    width: 0%;
+    height: 2px;
+    background-color: #003D29;
+    bottom: 0;
+    left: 0;
+    transition: .5s;
+}
+.nav-item a:hover::after{
+    width: 100%;
+}
+.cart_icon{
+    color: #003D29;
+    font-size: 22px;
+    position: relative;
+}
+.cart_icon p{
+    position: absolute;
+    right: -15px;
+    top: -5px;
+    width: 25px;
+    height: 25px;
+    background-color: #003D29;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/*
+======================
+    Footer Css 
+======================
+
+*/
+
+.footer_component{
+    margin-top: 100px;
+}
+
+.footer_wrap{
+    border-top: 1px solid #d3d2d2;
+}
+.top_footer{
+    margin-bottom: 70px;
+}
+.footer_item  p{
+    font-size: 14px;
+    padding: 25px 0;
+}
+.footer_item  h3{
+    font-size: 18px;
+    font-weight: 600;
+}
+.footer_item  ul li a{
+    font-size: 14px;
+    color: #003D29;
+    line-height: 28px;
+    transition: .5s;
+}
+.footer_item  ul li a:hover{
+    color: red;
+    margin-left: 5px;
+}
+.payment_method{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.payment_item{
+    width: 58px;
+    height: 40px;
+    border: 1px solid #d3d2d2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+.bottom_footer{
+    border-top: 1px solid #d3d2d2;
+    padding-top: 70px;
+}
+.footer-icon{
+    display: flex;
+    align-items: center;
+}
+.f_icon_item{
+    margin-right: 14px;
+    display: flex;
+    align-items: center;
+}
+.f_icon_item  i{
+    color: pink;
+    font-size: 20px;
+    margin-right: 3px;
+}
+.f_icon_item span{
+    font-size: 14px;
+    font-weight: 500;
+    transition: .5s;
+}
+.f_icon_item span:hover{
+    color: red;
+}
+.terms_area{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.terms_area ul{
+    display: flex;
+    align-items: center;
+}
+.terms_area ul li a{
+    margin-left: 10px;
+    transition: .5s;
+}
+.terms_area ul li a:hover{
+    color: red;
+}
+.terms_area  p{
+    margin: 0;
+    padding: 0;
+}
