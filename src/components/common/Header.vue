@@ -34,7 +34,7 @@ import logo from "../../assets/images/logo.svg";
     <!--  NavBar -->
     <nav class="navbar navbar-expand-lg">
       <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
           <img src="@/assets/images/logo.svg" alt="" />
         </a>
         <button
