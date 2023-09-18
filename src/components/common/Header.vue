@@ -1,14 +1,53 @@
 <script>
 import { RouterLink } from "vue-router";
+import { mapState, mapMutations, mapGetters } from 'vuex';
+import { isTokenDecode } from "@/helper/jwtDecode.js";
 import logo from "../../assets/images/logo.svg";
+
+export default {
+  data() {
+    return {
+      user: false
+    }
+  },
+
+  computed: {
+    ...mapState(['token', 'user']),
+    ...mapMutations(["SET_LOADING_STATUS"]),
+  },
+  created() {
+    this.showUser()
+  },
+  methods: {
+    ...mapGetters(['getUser']),
+
+    showUser() {
+      let tokenDecode = isTokenDecode(this.token)
+
+      this.$store.dispatch('authenticate', {
+        token: this.token,
+        user: tokenDecode,
+      });
+      this.user = true
+    },
+    logout() {
+   
+      localStorage.setItem("token", "")
+      this.$store.dispatch('singOut', {
+        token: "",
+        user: ""
+      })
+      this.user = false
+      this.$router.push({ name: 'login' });
+    }
+  }
+}
 </script>
 
 <template>
   <header>
     <div class="top_header">
-      <div
-        class="container d-flex align-items-center justify-content-between text-white"
-      >
+      <div class="container d-flex align-items-center justify-content-between text-white">
         <div>
           <i class="fa-solid fa-phone"></i>
           <a class="text-white" href="tel:+8801302460356">+8801302460356</a>
@@ -37,15 +76,8 @@ import logo from "../../assets/images/logo.svg";
         <a class="navbar-brand" href="/">
           <img src="@/assets/images/logo.svg" alt="" />
         </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -60,9 +92,7 @@ import logo from "../../assets/images/logo.svg";
               <router-link class="nav-link" to="about">About</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="contact"
-                >Contact US</router-link
-              >
+              <router-link class="nav-link" to="contact">Contact US</router-link>
             </li>
           </ul>
           <div class="navbar_right d-flex align-items-center">
@@ -75,32 +105,31 @@ import logo from "../../assets/images/logo.svg";
               </a>
             </div>
             <div class="auth ms-5">
-              <div class="sing_in">
-                <router-link to="/login">Login</router-link>
-              </div>
-              <!-- <div class="login_profile d-flex align-items-center">
+
+              <div v-if="token !== null" class="login_profile d-flex align-items-center">
                 <div class="user_profile_img">
                   <img src="@/assets/images/user.jpg" alt="" />
                 </div>
                 <div id="dropDownUser" class="dropdown ms-1">
-                  <button
-                    class="btn  dropdown-toggle"
-                    type="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Sohanur
+                  <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ this.getUser()?.userName }}
                   </button>
                   <ul class="dropdown-menu">
-                    <li>
+                    <li v-if="this.getUser()?.role === 'admin'">
+                      <router-link class="dropdown-item" to="admin">Dashboard</router-link>
+                    </li>
+                    <li v-else>
                       <router-link class="dropdown-item" to="profile">Profile</router-link>
                     </li>
-                    <li>
-                      <router-link class="dropdown-item" to="logout">Logout</router-link>
+                    <li @click="logout">
+                      <a class="dropdown-item" href="#"> Logout</a>
                     </li>
                   </ul>
                 </div>
-              </div> -->
+              </div>
+              <div v-else class="sing_in">
+                <router-link to="/login">Login</router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -108,3 +137,5 @@ import logo from "../../assets/images/logo.svg";
     </nav>
   </header>
 </template>
+
+
