@@ -7,6 +7,12 @@ import NotFound from "@/views/NotFound.vue";
 import LoginView from "@/views/auth/LoginView.vue";
 import RegisterView from "@/views/auth/RegisterView.vue";
 import store from "../store/Store";
+import BrandView from "../views/admin/BrandView.vue"
+import CategoryView from "../views/admin/CategoryView.vue"
+import ProductView from "../views/admin/ProductView.vue"
+import ProductDetailsView from "../views/client/ProductDetailsView.vue"
+import CartView from "../views/client/CartView.vue"
+import CProductsView from "../views/client/CProductsView.vue"
 import { isTokenDecode, isTokenValid } from "@/helper/jwtDecode.js";
 
 const router = createRouter({
@@ -14,6 +20,7 @@ const router = createRouter({
   routes: [
     //  Client Routes
     {
+      name: "/",
       path: "/",
       component: ClientLayout,
       children: [
@@ -31,6 +38,21 @@ const router = createRouter({
           name: "register",
           path: "register",
           component: RegisterView,
+        },
+        {
+          name: "cart",
+          path: "cart",
+          component: CartView,
+        },
+        {
+          name: "cproducts",
+          path: "products",
+          component: CProductsView,
+        },
+        {
+          name: "productDetailsView",
+          path: "products/:id",
+          component: ProductDetailsView,
         },
         {
           path: "/:pathMatch(.*)",
@@ -51,6 +73,18 @@ const router = createRouter({
           component: AdminView,
         },
         {
+          path: "brand",
+          component: BrandView,
+        },
+        {
+          path: "category",
+          component: CategoryView,
+        },
+        {
+          path: "product",
+          component: ProductView,
+        },
+        {
           path: "/admin/:pathMatch(.*)",
           component: NotFound,
         },
@@ -65,7 +99,7 @@ router.beforeEach((to, from, next) => {
     if (token) {
       let isValid = isTokenValid(token);
       let decodeData = isTokenDecode(token);
-     
+      
       if (isValid && decodeData.role === "admin") {
         
         next();

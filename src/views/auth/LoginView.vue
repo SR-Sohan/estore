@@ -66,9 +66,9 @@ export default {
         useToast().error("Email is required");
       } else if (
         this.formData.password === "" ||
-        this.formData.password.length < 8
+        this.formData.password.length < 6
       ) {
-        useToast().error("Password is required and must be 8 character");
+        useToast().error("Password is required and must be 6 character");
       } else {
         this.SET_LOADING_STATUS(true);
         let res = await axios.post(
@@ -83,11 +83,11 @@ export default {
             
           let tokenDecode = isTokenDecode(res.data['token']);
 
-          this.$store.dispatch('authenticate', {
+          this.$store.dispatch('settoken', {
                 token: res.data["token"],
                 user:  tokenDecode,
             });
-          this.$router.push({ name: "admin" });
+          this.$router.push({ name: "/" });
         } else {
           useToast().error(res.data["message"]);
         }

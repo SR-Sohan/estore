@@ -1,7 +1,5 @@
 <script>
 import { RouterLink } from "vue-router";
-import { mapState, mapMutations, mapGetters } from 'vuex';
-import { isTokenDecode } from "@/helper/jwtDecode.js";
 import logo from "../../assets/images/logo.svg";
 
 export default {
@@ -12,32 +10,21 @@ export default {
   },
 
   computed: {
-    ...mapState(['token', 'user']),
-    ...mapMutations(["SET_LOADING_STATUS"]),
-  },
-  created() {
-    this.showUser()
-  },
-  methods: {
-    ...mapGetters(['getUser']),
-
-    showUser() {
-      let tokenDecode = isTokenDecode(this.token)
-
-      this.$store.dispatch('authenticate', {
-        token: this.token,
-        user: tokenDecode,
-      });
-      this.user = true
+    cartItemCount() {
+      return this.$store.getters.cartItemCount;
     },
-    logout() {
+    getToken(){
+      return this.$store.getters.getToken
+    },
+    getUser(){
+      return this.$store.getters.getUser
+    }
+  },
+  
+  methods: {
    
-      localStorage.setItem("token", "")
-      this.$store.dispatch('singOut', {
-        token: "",
-        user: ""
-      })
-      this.user = false
+    logout() {   
+      this.$store.dispatch('singOut',"token")
       this.$router.push({ name: 'login' });
     }
   }
@@ -97,25 +84,25 @@ export default {
           </ul>
           <div class="navbar_right d-flex align-items-center">
             <div class="cart_section">
-              <a href="" class="cart_icon">
+              <a href="/cart" class="cart_icon">
                 <i class="fa-solid fa-basket-shopping"></i>
                 <p>
-                  <span>08</span>
+                  <span>{{cartItemCount}}</span>
                 </p>
               </a>
             </div>
             <div class="auth ms-5">
 
-              <div v-if="token !== null" class="login_profile d-flex align-items-center">
+              <div v-if="getToken !== null" class="login_profile d-flex align-items-center">
                 <div class="user_profile_img">
                   <img src="@/assets/images/user.jpg" alt="" />
                 </div>
                 <div id="dropDownUser" class="dropdown ms-1">
                   <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ this.getUser()?.userName }}
+                    {{ getUser?.userName }}
                   </button>
                   <ul class="dropdown-menu">
-                    <li v-if="this.getUser()?.role === 'admin'">
+                    <li v-if="getUser?.role === 'admin'">
                       <router-link class="dropdown-item" to="admin">Dashboard</router-link>
                     </li>
                     <li v-else>

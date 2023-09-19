@@ -35,6 +35,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 9999999999999999;
   }
   
   </style>

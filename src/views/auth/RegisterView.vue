@@ -63,8 +63,8 @@ export default {
             useToast().error("Name is Required");
         }else if(this.formData.email === ""){
             useToast().error("Email is Required");
-        }else if(this.formData.password === "" || this.formData.password.length < 8){
-            useToast().error("Password is Required and must be 8 Charcter");
+        }else if(this.formData.password === "" || this.formData.password.length < 6){
+            useToast().error("Password is Required and must be 6 Charcter");
         }else if(this.formData.cpassword === ""){
             useToast().error("Confrim password is Required");
         }else if(this.formData.password !== this.formData.cpassword){
@@ -75,10 +75,10 @@ export default {
           this.SET_LOADING_STATUS(false);
 
          if(res.status === 200){
-          useToast().success(res.data["message"]);
+          useToast().success("Login Successfull");
           this.$router.push({ name: 'login'});
          }else{
-          useToast().error(res.data["message"]);
+          useToast().error("Can't login");
          }
      
         }
